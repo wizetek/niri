@@ -87,8 +87,7 @@ $ nix-env -iA nixgl.auto.nixGLDefault
 
 ```
 $ mkdir -p ~/.local/share/fonts
-$ cd ~/.local/share/fonts
-$ ln -s ~/.nix-profile/share/fonts nix-fonts
+$ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 ```
 
 ## Launch niri
