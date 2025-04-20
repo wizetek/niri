@@ -51,7 +51,7 @@ $ nix-env -iA xwayland-satellite
 
 <br>
 
-## Recommended nixpkgs packages to install
+## List of recommended packages to install
 
 ```
 $ nix-env --query
@@ -83,7 +83,7 @@ $ nix-env -iA nixgl.auto.nixGLDefault
 
 <br>
 
-## Make fonts from nixpkgs work
+## Make fonts from nixpkgs available
 
 ```
 $ mkdir -p ~/.local/share/fonts
