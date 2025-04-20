@@ -53,9 +53,7 @@ $ nix-env -iA alacritty
 $ nix-env -iA xwayland-satellite
 ```
 
-<br>
-
-## List of recommended packages to install
+**Complete list of recommended packages to install**
 
 ```
 $ nix-env --query
@@ -96,6 +94,22 @@ $ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 
 ## Launch niri
 
+#### tty
 ```
 $ nixGL niri-session
+```
+
+#### DM
+```
+$ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessions/niri-nix.desktop
+```
+`/usr/share/wayland-sessions/niri-nix.desktop`
+```
+Exec=nixGL niri-session
+```
+
+## Configure components
+
+```
+$ cp -r ~/.nix-profile/etc/xdg/waybar ~/.config/
 ```
