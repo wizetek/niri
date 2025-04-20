@@ -92,14 +92,16 @@ $ mkdir -p ~/.local/share/fonts
 $ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 ```
 
+<br>
+
 ## Launch niri
 
-#### tty
+#### From console
 ```
 $ nixGL niri-session
 ```
 
-#### DM
+#### From login manager
 ```
 $ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessions/niri-nix.desktop
 ```
@@ -108,7 +110,9 @@ $ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessi
 Exec=nixGL niri-session
 ```
 
-## Configure components
+<br>
+
+## Customize configuration of individual components
 
 ```
 $ cp -r ~/.nix-profile/etc/xdg/waybar ~/.config/
