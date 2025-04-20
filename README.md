@@ -13,7 +13,10 @@ https://search.nixos.org/packages
 ## Set up nixpkgs environment
 
 ```
-$ yourpkgmgr install nix
+$ yourpkgmgr install nix    # or nix-bin, or similar
+```
+
+```
 $ gpasswd -a yourusername nix-users
 $ exit
 $ systemctl enable --now nix-daemon.service
@@ -22,7 +25,10 @@ $ systemctl enable --now nix-daemon.service
 ```
 $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 $ nix-channel --update
+$ nix-env --install --attr nix-bash-completions
 ```
+
+<br>
 
 `~/.profile`
 ```
@@ -30,6 +36,8 @@ $ nix-channel --update
 PATH="$HOME/.nix-profile/bin:$PATH"
 XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 ```
+
+<br>
 
 `~/.config/systemd/user.conf`
 ```
@@ -42,15 +50,17 @@ $ systemctl --user daemon-reload
 
 <br>
 
-## Install niri and other components from nixpkgs
+## Install niri and other components
 
 ```
-$ nix-env --install --attr niri
+$ nix-env -iA niri
 ```
 ```
+$ nix-env -iA mesa
+$ nix-env -iA xwayland-satellite
 $ nix-env -iA waybar
 $ nix-env -iA alacritty
-$ nix-env -iA xwayland-satellite
+$ nix-env -iA fuzzel
 ```
 
 **Complete list of recommended packages to install**
@@ -65,7 +75,6 @@ gammastep-2.0.9
 mako-1.10.0
 mesa-25.0.3
 niri-25.02
-nix-bash-completions-0.6.8
 swaybg-1.2.1
 swayidle-1.8.0
 waybar-0.12.0
@@ -96,15 +105,18 @@ $ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 
 ## Launch niri
 
-#### From console
+#### from Console
 ```
 $ nixGL niri-session
 ```
 
-#### From login manager
+#### from Login Manager
 ```
 $ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessions/niri-nix.desktop
 ```
+
+<br>
+
 `/usr/share/wayland-sessions/niri-nix.desktop`
 ```
 Exec=nixGL niri-session
@@ -112,8 +124,9 @@ Exec=nixGL niri-session
 
 <br>
 
-## Customize configuration of individual components
+## Customize configuration of individual tools
 
 ```
 $ cp -r ~/.nix-profile/etc/xdg/waybar ~/.config/
+$ cp -r ~/.nix-profile/etc/xdg/fuzzel ~/.config/
 ```
