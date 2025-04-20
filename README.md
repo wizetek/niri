@@ -36,14 +36,18 @@ XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 [Manager]
 ManagerEnvironment="XDG_DATA_DIRS=/home/yourusername/.nix-profile/share:/usr/local/share:/usr/share"
 ```
-`$ systemctl --user daemon-reload`
+```
+$ systemctl --user daemon-reload
+```
 
 <br>
 
 ## Install niri and other components from nixpkgs
 
 ```
-$ nix-env --install -A niri
+$ nix-env --install --attr niri
+```
+```
 $ nix-env -iA waybar
 $ nix-env -iA alacritty
 $ nix-env -iA xwayland-satellite
@@ -92,4 +96,6 @@ $ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 
 ## Launch niri
 
-`$ nixGL niri-session`
+```
+$ nixGL niri-session
+```
