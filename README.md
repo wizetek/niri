@@ -42,7 +42,7 @@ XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 `~/.config/systemd/user.conf`
 ```
 [Manager]
-ManagerEnvironment="XDG_DATA_DIRS=/home/yourusername/.nix-profile/share:/usr/local/share:/usr/share"
+ManagerEnvironment="XDG_DATA_DIRS=%h/.nix-profile/share:/usr/local/share:/usr/share"
 ```
 ```
 $ systemctl --user daemon-reload
