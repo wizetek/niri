@@ -1,11 +1,20 @@
 # Install niri using Nix package manager on any Linux distribution
 
+## General information
+
 **niri** – a scrollable-tiling Wayland compositor<br>
 https://github.com/YaLTeR/niri/
 
 <br>
 
-**nixpkgs** – the Nix Packages collection<br>
+**Nix wiki**<br>
+https://wiki.nixos.org/wiki/Nix_package_manager
+<br>
+https://wiki.nixos.org/wiki/Nixpkgs
+
+<br>
+
+**Nixpkgs search** – the Nix Packages collection<br>
 https://search.nixos.org/packages
 
 <br>
@@ -27,6 +36,7 @@ $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 $ nix-channel --update
 $ nix-env --install --attr nix-bash-completions
 ```
+nixpkgs-unstable channel corresponds to the main development branch (unstable) of Nixpkgs, delivering the latest tested updates on a rolling basis.
 
 <br>
 
@@ -129,4 +139,13 @@ Exec=nixGL niri-session
 ```
 $ cp -r ~/.nix-profile/etc/xdg/waybar ~/.config/
 $ cp -r ~/.nix-profile/etc/xdg/fuzzel ~/.config/
+```
+
+<br>
+
+## Keep all packages up-to-date
+
+```
+$ nix-channel --update
+$ nix-env --upgrade
 ```
