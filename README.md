@@ -149,3 +149,17 @@ $ cp -r ~/.nix-profile/etc/xdg/fuzzel ~/.config/
 $ nix-channel --update
 $ nix-env --upgrade
 ```
+<br>
+
+## Fix for Mesa updates breaking things
+
+```
+$ nix-env -iA nixgl.auto.nixGLDefault
+```
+
+If all else fails, roll back generations
+
+```
+$ nix-env --list-generations
+$ nix-env --rollback
+```
