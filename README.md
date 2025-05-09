@@ -36,7 +36,8 @@ $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 $ nix-channel --update
 $ nix-env --install --attr nix-bash-completions
 ```
-nixpkgs-unstable channel corresponds to the main development branch (unstable) of Nixpkgs, delivering the latest tested updates on a rolling basis.
+
+`nixpkgs-unstable` channel corresponds to the main development branch (unstable) of Nixpkgs, delivering the latest tested updates on a rolling basis.
 
 <br>
 
@@ -50,10 +51,12 @@ XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 <br>
 
 `~/.config/systemd/user.conf`
+
 ```
 [Manager]
 ManagerEnvironment="XDG_DATA_DIRS=%h/.nix-profile/share:/usr/local/share:/usr/share"
 ```
+
 ```
 $ systemctl --user daemon-reload
 ```
@@ -65,6 +68,7 @@ $ systemctl --user daemon-reload
 ```
 $ nix-env -iA niri
 ```
+
 ```
 $ nix-env -iA mesa
 $ nix-env -iA xwayland-satellite
@@ -116,11 +120,13 @@ $ ln -s ~/.nix-profile/share/fonts ~/.local/share/fonts/nix-fonts
 ## Launch niri
 
 #### from Console
+
 ```
 $ nixGL niri-session
 ```
 
 #### from Login Manager
+
 ```
 $ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessions/niri-nix.desktop
 ```
@@ -128,6 +134,7 @@ $ cp ~/.nix-profile/share/wayland-sessions/niri.desktop /usr/share/wayland-sessi
 <br>
 
 `/usr/share/wayland-sessions/niri-nix.desktop`
+
 ```
 Exec=nixGL niri-session
 ```
@@ -149,17 +156,36 @@ $ cp -r ~/.nix-profile/etc/xdg/fuzzel ~/.config/
 $ nix-channel --update
 $ nix-env --upgrade
 ```
+
 <br>
 
-## Fix for Mesa updates breaking things
+## Try to fix failure to launch or black screen after Mesa updates
+
+```
+$ nix-env -iA nixpkgs.mesa
+```
+
+or
 
 ```
 $ nix-env -iA nixgl.auto.nixGLDefault
 ```
 
-If all else fails, roll back generations
+If all else fails, roll back generations.
 
 ```
 $ nix-env --list-generations
 $ nix-env --rollback
+```
+
+Repeat until working state has been restored.
+
+<br>
+
+## Clean up
+
+Perform only when everything works properly. After this, rollback is not possible.
+
+```
+$ nix-collect-garbage --delete-old
 ```
