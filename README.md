@@ -1,4 +1,4 @@
-# Install niri using Nix package manager on any Linux distribution
+# Install niri Wayland window manager using Nix package manager on any Linux distribution
 
 ## General information
 
