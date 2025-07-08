@@ -165,7 +165,7 @@ $ nix-env --upgrade
 $ nix-env -iA nixpkgs.mesa
 ```
 
-or
+and then
 
 ```
 $ nix-env -iA nixgl.auto.nixGLDefault
