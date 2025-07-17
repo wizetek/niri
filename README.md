@@ -1,5 +1,7 @@
 # Install niri Wayland window manager using Nix package manager on any Linux distribution
 
+<br>
+
 ## General information
 
 **niri** – a scrollable-tiling Wayland compositor<br>
