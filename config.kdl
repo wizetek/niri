@@ -1,3 +1,4 @@
+// niri 25.08
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
@@ -279,12 +280,11 @@ spawn-at-startup "waypaper" "--restore"
 spawn-at-startup "swayidle" "-w" "timeout" "601" "niri msg action power-off-monitors" "timeout" "600" "swaylock -f -F -e -l -K -c 200000" "before-sleep" "swaylock -f -F -e -l -K -c 000020"
 //spawn-at-startup "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
-spawn-at-startup "xwayland-satellite" ":9"
 
 // #wizetek
-environment {
-    DISPLAY ":9"
-}
+//environment {
+//    DISPLAY ":9"
+//}
 
 // #wizetek
 cursor {
