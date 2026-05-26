@@ -1,0 +1,155 @@
+// wizetek: Custom include for niri 26.04 + Noctalia shell
+//
+//        Add as last line in main config.kdl
+//        include "wizetek.kdl"
+//
+//        Disable (comment out) in main config.kdl
+//        //spawn-at-startup "waybar"
+
+input {
+    keyboard {
+        xkb {
+            // wizetek: Map CapsLock to Hyper
+            layout "pl,us"
+            options "grp:shifts_toggle,caps:hyper"
+        }
+    }
+
+    // wizetek: Do not enable touchpad natural scroll (set on by default in config.kdl)
+    touchpad { tap; }
+
+    // wizetek: Turn off TrackPoint
+    trackpoint { off; }
+}
+
+layout {
+    // wizetek: Gaps reduced from default 16 to 8
+    gaps 8
+
+    focus-ring {
+        // wizetek: Focus ring reduced from default 4 to 2
+        width 2
+        active-color "#c8c8c8"
+        //active-color "#7fc8ff"
+        //active-color "#c87fff"
+        //active-color "#7fffc8"
+        //active-color "#c8ff7f"
+        //active-color "#ffc87f"
+        //active-color "#ff7fc8"
+        //active-color "#c80000"
+        //inactive-color "#505050"
+        //urgent-color "#9b0000"
+    }
+
+    // wizetek: Window tabs
+    tab-indicator {
+        //hide-when-single-tab
+        position "top"
+        place-within-column
+        width 8
+        gap 4
+        gaps-between-tabs 2
+        length total-proportion=1.0
+    }
+}
+
+// wizetek: PipeWire must be running for other stuff to work
+spawn-at-startup "pipewire"
+
+// wizetek: Start Noctalia shell
+spawn-sh-at-startup "qs -c /etc/xdg/quickshell/noctalia-shell"
+
+// wizetek: Hide mouse cursor on inactivity
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 24
+    hide-after-inactive-ms 5000
+}
+
+// wizetek: Fuzzel transparency setting
+layer-rule {
+    match namespace="^launcher$"
+    opacity 0.95
+}
+
+hotkey-overlay {
+    // wizetek: Don't show key help on startup
+    skip-at-startup
+}
+
+// wizetek: Disable client side decorations
+prefer-no-csd
+
+// wizetek: Enable rounded corners and reduce from default 12 to 4
+window-rule {
+    geometry-corner-radius 4
+    clip-to-geometry true
+}
+
+// wizetek: Applications which set their own window width instead of the 50% default
+window-rule {
+    match app-id="^Firefox$"
+    match app-id="^pcmanfm$"
+    default-column-width {}
+}
+
+// wizetek: Firefox picture-in-picture window is always floating
+window-rule {
+    match app-id="^Firefox$" title="^Picture-in-Picture$"
+    open-floating true
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+}
+
+binds {
+    // wizetek: Super key bind for file manager
+    Mod+E { spawn "nemo"; }
+
+    // wizetek: Alternative terminal
+    Mod+Alt+T { spawn "sakura"; }
+
+    // wizetek: Hyper key binds
+    Mod3+D { spawn "bemenu-run" "-b"; }
+    Mod3+T { spawn "terminator"; }
+    Mod3+E { spawn "pcmanfm"; }
+
+    // wizetek: Noctalia shell default key binds
+    Mod+Space { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+    Mod+S { spawn-sh "qs -c noctalia-shell ipc call controlCenter toggle"; }
+
+    Mod+Return { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
+    Mod+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+    // Secondary (overwrites config.kdl)
+    Super+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+    Mod+Delete { spawn-sh "qs -c noctalia-shell ipc call sessionMenu lockAndSuspend"; }
+    Ctrl+Alt+Delete { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
+    // Custom definition
+    Mod+Backslash { spawn-sh "qs -c noctalia-shell ipc call nightLight toggle"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "increase"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "increase"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "decrease"; }
+    XF86AudioMute allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "muteInput"; }
+
+    // wizetek: Column width steps reduced from default 10% to 5%
+    Mod+Minus { set-column-width "-5%"; }
+    Mod+Equal { set-column-width "+5%"; }
+    // wizetek: Extra fine grain column width steps
+    Mod+Alt+Minus { set-column-width "-1%"; }
+    Mod+Alt+Equal { set-column-width "+1%"; }
+
+    // wizetek: Column height steps reduced from default 10% to 5%
+    Mod+Shift+Minus { set-window-height "-5%"; }
+    Mod+Shift+Equal { set-window-height "+5%"; }
+}
+
+// wizetek: Disable overview when mouse moves to top-left corner
+gestures {
+    hot-corners { off; }
+}
+
+// wizetek: Lock screen upon closing laptop lid
+switch-events {
+    lid-close { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lock"; }
+}
