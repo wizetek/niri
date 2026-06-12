@@ -1,17 +1,23 @@
-// wizetek: Custom include for niri 26.04 + Noctalia shell
+// wizetek: Custom include file for niri 26.04 + Noctalia 4.7.7 shell
 //
-//        Add as last line in main config.kdl
-//        include "wizetek.kdl"
+// => Add as last line in main config.kdl
+// => include "wizetek.kdl"
 //
-//        Disable (comment out) in main config.kdl
-//        //spawn-at-startup "waybar"
+// => Comment out in main config.kdl
+// => //spawn-at-startup "waybar"
+
+// wizetek: Allow notification actions and window activation from Noctalia
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
 
 input {
     keyboard {
         xkb {
-            // wizetek: Map CapsLock to Hyper
+            // wizetek: PL and US keyboard layout
             layout "pl,us"
-            options "grp:shifts_toggle,caps:hyper"
+            // wizetek: CapsLock is Hyper, both Shifts lock caps, Shift+RightAlt is compose, both Ctrls switch layouts
+            options "caps:hyper,shift:both_capslock,lv3:ralt_switch_multikey,grp:ctrls_toggle"
         }
     }
 
@@ -22,12 +28,20 @@ input {
     trackpoint { off; }
 }
 
+overview {
+    // wizetek: Backdrop color for overview
+    backdrop-color "#404040"
+}
+
 layout {
+    // wizetek: Desktop background color
+    background-color "transparent"
+
     // wizetek: Gaps reduced from default 16 to 8
     gaps 8
 
+    // wizetek: Focus ring reduced from default 4 to 2
     focus-ring {
-        // wizetek: Focus ring reduced from default 4 to 2
         width 2
         active-color "#c8c8c8"
         //active-color "#7fc8ff"
@@ -41,7 +55,7 @@ layout {
         //urgent-color "#9b0000"
     }
 
-    // wizetek: Window tabs
+    // wizetek: Window tabs settings
     tab-indicator {
         //hide-when-single-tab
         position "top"
@@ -56,8 +70,20 @@ layout {
 // wizetek: PipeWire must be running for other stuff to work
 spawn-at-startup "pipewire"
 
+// wizetek: PolicyKit authentication agent (GUI for pkexec)
+spawn-at-startup "lxqt-policykit-agent"
+
 // wizetek: Start Noctalia shell
 spawn-sh-at-startup "qs -c /etc/xdg/quickshell/noctalia-shell"
+
+// wizetek: Environment variables
+environment {
+    // wizetek: XDG session and desktop
+    XDG_SESSION_TYPE "wayland"
+    XDG_CURRENT_DESKTOP "niri"
+    // wizetek: Qt applications style
+    QT_QPA_PLATFORMTHEME "qt5ct:qt6ct"
+}
 
 // wizetek: Hide mouse cursor on inactivity
 cursor {
@@ -72,8 +98,8 @@ layer-rule {
     opacity 0.95
 }
 
+// wizetek: Don't show key help on startup
 hotkey-overlay {
-    // wizetek: Don't show key help on startup
     skip-at-startup
 }
 
@@ -101,6 +127,12 @@ window-rule {
     default-window-height { fixed 270; }
 }
 
+// wizetek: Polkit auth dialog window is always floating
+window-rule {
+    match app-id="lxqt-policykit-agent"
+    open-floating true
+}
+
 binds {
     // wizetek: Super key bind for file manager
     Mod+E { spawn "nemo"; }
@@ -117,14 +149,20 @@ binds {
     Mod+Space { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
     Mod+S { spawn-sh "qs -c noctalia-shell ipc call controlCenter toggle"; }
 
+    // wizetek: Noctalia settings (changed from Mod+Comma)
     Mod+Return { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
+
+    // wizetek: Noctalia lock screen
     Mod+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
-    // Secondary (overwrites config.kdl)
+    // wizetek: Secondary key bind to lock screen (overwrites main config.kdl)
     Super+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
-    Mod+Delete { spawn-sh "qs -c noctalia-shell ipc call sessionMenu lockAndSuspend"; }
+
+    // wizetek: My custom Noctalia key binds
     Ctrl+Alt+Delete { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
-    // Custom definition
+    Mod+Delete { spawn-sh "qs -c noctalia-shell ipc call sessionMenu lockAndSuspend"; }
     Mod+Backslash { spawn-sh "qs -c noctalia-shell ipc call nightLight toggle"; }
+
+    // wizetek: Brightness and audio control
     XF86MonBrightnessUp allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "increase"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
     XF86AudioRaiseVolume allow-when-locked=true { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "increase"; }
@@ -135,7 +173,7 @@ binds {
     // wizetek: Column width steps reduced from default 10% to 5%
     Mod+Minus { set-column-width "-5%"; }
     Mod+Equal { set-column-width "+5%"; }
-    // wizetek: Extra fine grain column width steps
+    // wizetek: Additional key binds to fine tune column width in 1% steps
     Mod+Alt+Minus { set-column-width "-1%"; }
     Mod+Alt+Equal { set-column-width "+1%"; }
 
