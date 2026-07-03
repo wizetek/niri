@@ -1,4 +1,4 @@
-# Install niri Wayland window manager using Nix package manager on any Linux distribution
+# Install niri (Wayland WM/compositor) using Nix package manager on any Linux distribution
 
 <br>
 
